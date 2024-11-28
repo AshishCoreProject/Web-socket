@@ -1,6 +1,19 @@
 
-const webSocket = new WebSocket('ws://localhost:8081', "protocolOne");
+const webSocket = new WebSocket('ws://localhost:8081');
+
+const input = document.getElementById("input");
+const button = document.querySelector("button");
+
 
 webSocket.onopen = (event) => {
-  webSocket.send("Here is some text that server is awaiting");
+  webSocket.send("Websocket connection is established");
 }
+
+button.addEventListener("click", () => {
+  const clientText = input.value.toString();
+  if (webSocket.readyState === webSocket.OPEN){
+    webSocket.send(clientText);
+  }else{
+    console.log("Websocket connection is not open")
+  }
+});
